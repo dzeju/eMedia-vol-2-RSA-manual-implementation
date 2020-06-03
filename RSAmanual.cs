@@ -8,34 +8,6 @@ namespace e_media0_3
 {
     class RSAmanual
     {
-        BigInteger q = 0;
-
-        public void GenerateKeys()
-        {
-            int e = 0;
-            BigInteger n = 0;
-            BigInteger d = 0;
-            while (true)
-            {
-                Thread t = new Thread(new ThreadStart(ThreadProc));
-                t.Start();
-                Thread.Sleep(0);
-                BigInteger p = GetProbablyPrimeNumber();
-                t.Join();
-
-                n = BigInteger.Multiply(p, q);
-                BigInteger phi = BigInteger.Multiply(p - 1, q - 1);
-
-                e = ChooseE(phi, n);
-                d = GetD(phi, e);
-                if (d > 0)
-                    break;
-            }
-            
-            string[] lines = { "n: " + n.ToString(), "d: " + d.ToString(), "e: " + e.ToString() };
-            System.IO.File.WriteAllLines(@"C:\Users\Kuba\source\repos\e_media0_3\key.txt", lines);
-        }
-
         public byte[] EncryptMe(byte[] myFile, int begin, string pubKey, string privKey)
         {
             BigInteger n = BigInteger.Parse(pubKey);
@@ -50,7 +22,6 @@ namespace e_media0_3
             {
                 System.Windows.MessageBox.Show(en.Message);
             }
-
 
             return null;
         }
@@ -97,10 +68,6 @@ namespace e_media0_3
 
                 decryptedData = AddDataToArray(decryptedData, decryptedChunk);
             }
-            /*System.Windows.MessageBox.Show("File size is (if successful): " + myFile.Length.ToString() +
-                "and actually is: " + decryptedData.Length.ToString());*/
-            /*if (myFile.Length > decryptedData.Length)
-                decryptedData = AddDataToArray(decryptedData, new byte[myFile.Length - decryptedData.Length]);*/
 
             return decryptedData;
         }
@@ -141,10 +108,6 @@ namespace e_media0_3
                 
                 encryptedData = AddDataToArray(encryptedData, encryptedChunk);
             }
-            /*System.Windows.MessageBox.Show("File size should be: " + myFile.Length.ToString() +
-                "and actually is: " + encryptedData.Length.ToString());*/
-            /*if (myFile.Length > encryptedData.Length)
-                encryptedData = AddDataToArray(encryptedData, new byte[myFile.Length - encryptedData.Length]);*/
 
             return encryptedData;
         }
@@ -158,7 +121,87 @@ namespace e_media0_3
             return sum;
         }
 
-        private BigInteger GetD(BigInteger phi, int e)//euclid
+        BigInteger q = 0;
+
+        private void ThreadProc()
+        {
+            q = GetProbablyPrimeNumber();
+        }
+
+        public void GenerateKeys()
+        {
+            uint e = 0;
+            BigInteger n = 0;
+            BigInteger d = 0;
+            /*var RSA = new RSACryptoServiceProvider(384);
+            RSAParameters s = new RSAParameters();*/
+
+            while (true)
+            {
+                Thread t = new Thread(new ThreadStart(ThreadProc));
+                t.Start();
+                Thread.Sleep(0);
+                BigInteger p = GetProbablyPrimeNumber();
+                t.Join();
+
+                n = BigInteger.Multiply(p, q);
+                BigInteger phi = BigInteger.Multiply(p - 1, q - 1);
+
+                e = ChooseE(phi, n);
+                d = GetD(phi, e);
+                if (d > 0)
+                {
+                    {
+                        /*s.D = d.ToByteArray(true,false);
+                        s.DP = (d % (p - 1)).ToByteArray(true, false);
+                        s.DQ = (d % (q - 1)).ToByteArray(true, false);
+                        s.Exponent = BitConverter.GetBytes(e);
+                        s.InverseQ = BigInteger.ModPow(q, p - 2, p).ToByteArray(true, false);
+                        s.Modulus = n.ToByteArray(true, false);
+                        s.P = p.ToByteArray(true, false);
+                        s.Q = q.ToByteArray(true, false);
+                        RSA.ImportParameters(s);*/
+                    }
+                    break;
+                }
+            }
+            {/* var pubKey = RSA.ExportParameters(false);
+             string pubKeyString;
+             {
+                 //we need some buffer
+                 var sw = new System.IO.StringWriter();
+                 //we need a serializer
+                 var xs = new System.Xml.Serialization.XmlSerializer(typeof(RSAParameters));
+                 //serialize the key into the stream
+                 xs.Serialize(sw, pubKey);
+                 //get the string from the stream
+                 pubKeyString = sw.ToString();
+             }
+
+             var privKey = RSA.ExportParameters(true);
+             string privKeyString;
+             {
+                 //we need some buffer
+                 var sw = new System.IO.StringWriter();
+                 //we need a serializer
+                 var xs = new System.Xml.Serialization.XmlSerializer(typeof(RSAParameters));
+                 //serialize the key into the stream
+                 xs.Serialize(sw, privKey);
+                 //get the string from the stream
+                 privKeyString = sw.ToString();
+             }*/
+            }
+
+            string[] lines = { "n: " + n.ToString() + "\nd: " + d.ToString(), "e: " + e.ToString() +
+                               "\n\nn: " + Convert.ToBase64String(n.ToByteArray(true,false)) +
+                               "\nd: " + Convert.ToBase64String(d.ToByteArray(true,false)) +
+                               "\ne: " + Convert.ToBase64String(BitConverter.GetBytes(e))/* +
+                               "\nauto RSA pubKey: " + pubKeyString +
+                               "\nauto RSA privKey: " + privKeyString*/};
+            System.IO.File.WriteAllLines(@"C:\Users\Kuba\source\repos\e_media0_3\key.txt", lines);
+        }
+
+        private BigInteger GetD(BigInteger phi, uint e)//euclid
         {
             BigInteger d = 1;
             BigInteger phi1 = phi;
@@ -190,9 +233,9 @@ namespace e_media0_3
             throw new NotImplementedException();
         }
 
-        private int ChooseE(BigInteger phi, BigInteger n)
+        private uint ChooseE(BigInteger phi, BigInteger n)//wybranie e wzglednie pierwszego z phi
         {
-            for (int e = 65537; e < phi; e++)
+            for (uint e = 65537; e < phi; e++)
             {
                 if (e % 2 != 0)
                 {
@@ -202,12 +245,6 @@ namespace e_media0_3
                 }
             }
             throw new Exception();
-        }
-
-        private void ThreadProc()
-        {
-            q = GetProbablyPrimeNumber();
-            //System.Windows.MessageBox.Show("Call to join from thread");
         }
 
         public BigInteger GetProbablyPrimeNumber()
@@ -226,7 +263,7 @@ namespace e_media0_3
             return n;
         }
 
-        private bool IsItProbablyPrime(BigInteger num)
+        private bool IsItProbablyPrime(BigInteger num)//miller-rabin
         {
             if (num % 2 == 0)
                 return false;
@@ -258,8 +295,6 @@ namespace e_media0_3
                     b = BigInteger.ModPow(b, 2, num);
                     if (b.IsOne)
                         return false;
-                    /*if (b == BigInteger.MinusOne)
-                        return true;*/
                     if (b == num - 1)
                         break;
                 }

@@ -98,15 +98,34 @@ namespace e_media0_3
             else
             {
                 RSAauto rsa = new RSAauto();
-                byte[] myFileEncrypted = null;
 
-                myFileEncrypted = rsa.EncryptMe(myFile);
+                byte[] myFileEncrypted = rsa.EncryptMe(myFile, ReadData(myFile, 10, 13), pubKey.Text, privKey.Text);
                 if (myFileEncrypted == null)
                     System.Windows.MessageBox.Show("null here", "Error");
                 for (int i = 0; i < ReadData(myFile, 10, 13); i++)
                     myFileEncrypted[i] = myFile[i];
 
                 SaveTheFile(myFileEncrypted);
+            }
+        }
+
+        private void BtnRSAdec_Click(object sender, RoutedEventArgs e)
+        {
+            if (myFile == null)
+            {
+                System.Windows.MessageBox.Show("No file here", "Error");
+            }
+            else
+            {
+                RSAauto rsa = new RSAauto();
+
+                byte[] myFileDecrypted = rsa.DecryptMe(myFile, ReadData(myFile, 10, 13), pubKey.Text, privKey.Text);
+                if (myFileDecrypted == null)
+                    System.Windows.MessageBox.Show("null here", "Error");
+                for (int i = 0; i < ReadData(myFile, 10, 13); i++)
+                    myFileDecrypted[i] = myFile[i];
+
+                SaveTheFile(myFileDecrypted);
             }
         }
 
@@ -160,6 +179,7 @@ namespace e_media0_3
         {
             RSAmanual rsa = new RSAmanual();
             rsa.GenerateKeys();
+            System.Windows.MessageBox.Show("Done");
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -294,6 +314,6 @@ namespace e_media0_3
                 SaveTheFile(myFile);
         }
 
-
+        
     }
 }

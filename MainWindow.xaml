@@ -11,10 +11,11 @@
         <Button x:Name="btnViewImg" Content="View" HorizontalAlignment="Right" Margin="0,38,10,0" VerticalAlignment="Top" Width="75" Click="BtnViewImg_Click" Height="23" Background="#FF3C3C3C" BorderBrush="#FF464646" Foreground="#FFBFBFBF"/>
         <Button x:Name="btnFFT" Content="FFT" HorizontalAlignment="Right" Margin="0,66,10,0" VerticalAlignment="Top" Width="75" Click="BtnFFT_Click" Height="23" Background="#FF3C3C3C" BorderBrush="#FF464646" Foreground="#FFBFBFBF"/>
         <Button x:Name="btnAnonImg" Content="Anon" HorizontalAlignment="Right" Margin="0,94,10,0" VerticalAlignment="Top" Width="75" Click="BtnAnonImg_Click" Height="23" Background="#FF3C3C3C" BorderBrush="#FF464646" Foreground="#FFBFBFBF"/>
-        <Button x:Name="btnRSA" Content="RSA" HorizontalAlignment="Right" Margin="0,124,10,0" VerticalAlignment="Top" Width="75" Click="BtnRSA_Click" Height="23" Background="#FF3C3C3C" BorderBrush="#FF464646" Foreground="#FFBFBFBF"/>
-        <Button x:Name="btnRSAmanual" Content="RSA manual" HorizontalAlignment="Right" Margin="0,147,10,0" VerticalAlignment="Top" Width="75" Click="BtnRSAmanual_Click" Height="23" Background="#FF3C3C3C" BorderBrush="#FF464646" Foreground="#FFBFBFBF"/>
-        <Button x:Name="btnRSAmanualdec" Content="RSA man dec" HorizontalAlignment="Right" Margin="0,173,10,0" VerticalAlignment="Top" Width="75" Click="BtnRSAmanualdec_Click" Height="23" Background="#FF3C3C3C" BorderBrush="#FF464646" Foreground="#FFBFBFBF"/>
-        <Button x:Name="btnGenerateKeys" Content="Key Gen" HorizontalAlignment="Right" Margin="0,196,10,0" VerticalAlignment="Top" Width="75" Click="BtnGenerateKeys_Click" Height="23" Background="#FF3C3C3C" BorderBrush="#FF464646" Foreground="#FFBFBFBF"/>
+        <Button x:Name="btnRSA" Content="RSA" HorizontalAlignment="Right" Margin="0,122,10,0" VerticalAlignment="Top" Width="75" Click="BtnRSA_Click" Height="23" Background="#FF3C3C3C" BorderBrush="#FF464646" Foreground="#FFBFBFBF"/>
+        <Button x:Name="btnRSAdec" Content="RSA dec" HorizontalAlignment="Right" Margin="0,150,10,0" VerticalAlignment="Top" Width="75" Click="BtnRSAdec_Click" Height="23" Background="#FF3C3C3C" BorderBrush="#FF464646" Foreground="#FFBFBFBF"/>
+        <Button x:Name="btnRSAmanual" Content="RSA manual" HorizontalAlignment="Right" Margin="0,178,10,0" VerticalAlignment="Top" Width="75" Click="BtnRSAmanual_Click" Height="23" Background="#FF3C3C3C" BorderBrush="#FF464646" Foreground="#FFBFBFBF"/>
+        <Button x:Name="btnRSAmanualdec" Content="RSA man dec" HorizontalAlignment="Right" Margin="0,206,10,0" VerticalAlignment="Top" Width="75" Click="BtnRSAmanualdec_Click" Height="23" Background="#FF3C3C3C" BorderBrush="#FF464646" Foreground="#FFBFBFBF"/>
+        <Button x:Name="btnGenerateKeys" Content="Key Gen" HorizontalAlignment="Right" Margin="0,234,10,0" VerticalAlignment="Top" Width="75" Click="BtnGenerateKeys_Click" Height="23" Background="#FF3C3C3C" BorderBrush="#FF464646" Foreground="#FFBFBFBF"/>
 
         <Label x:Name="TxtFile" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="671" Margin="10,10,0,0" Foreground="#FFBFBFBF"/>
 
