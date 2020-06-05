@@ -34,7 +34,7 @@ namespace e_media0_3
 
                     RSA.FromXmlString(public_key);
 
-                    RSA.ExportParameters(false);
+                    {/*RSA.ExportParameters(false);
 
                     string privKeyString;
                     {
@@ -48,7 +48,8 @@ namespace e_media0_3
                         privKeyString = sw.ToString();
                     }
 
-                    System.IO.File.WriteAllText(@"C:\Users\Kuba\source\repos\e_media0_3\key_auto.txt", privKeyString);
+                    System.IO.File.WriteAllText(@"C:\Users\Kuba\source\repos\e_media0_3\key_auto.txt", privKeyString);*/
+                    }
 
                     int times = (myFile.Length - begin) / len;
                     for (int i = 0; i < times; i++)

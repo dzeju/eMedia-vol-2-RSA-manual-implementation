@@ -68,7 +68,6 @@ namespace e_media0_3
 
                 decryptedData = AddDataToArray(decryptedData, decryptedChunk);
             }
-
             return decryptedData;
         }
 
